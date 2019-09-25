@@ -19,19 +19,20 @@ int main(int argc, char *argv[]) {
     int number;
     int givings;
     string name;
+    bool first = true;
     int money, money_per_friend;
 
-    while (cin>> number) {
+    while (cin >> number) {
         names = new string[number];
         friends_money = new int[number];
 
         for (int i = 0; i < number; i++) {
-            cin>>names[i];
+            cin >> names[i];
             friends_money[i] = 0;
         }
 
         for (int j = 0; j < number; j++) {
-            cin>> name;
+            cin >> name;
 
             auto index_giver = find_name(name, number);
 
@@ -40,10 +41,10 @@ int main(int argc, char *argv[]) {
             givings = 0;
             cin >> givings;
 
-            if ( givings != 0)
+            if (givings != 0)
                 friends_money[index_giver] = friends_money[index_giver] - money;
 
-            if( givings != 0)
+            if (givings != 0)
                 money_per_friend = money / givings;
             else
                 continue;
@@ -51,7 +52,7 @@ int main(int argc, char *argv[]) {
             friends_money[index_giver] = friends_money[index_giver] + (money - money_per_friend * givings);
 
             for (int i = 0; i < givings; i++) {
-                cin>>name;
+                cin >> name;
 
                 auto index = find_name(name, number);
 
@@ -59,10 +60,14 @@ int main(int argc, char *argv[]) {
             }
         }
 
+        if (first)
+            first = false;
+        else
+            cout << endl;
+
         for (int i = 0; i < number; i++)
             printf("%s %d\n", names[i].c_str(), friends_money[i]);
 
-        cout << endl;
 
         friends_money = nullptr;
         delete[] friends_money;
